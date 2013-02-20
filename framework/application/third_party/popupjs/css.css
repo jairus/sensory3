@@ -1,0 +1,65 @@
+div.popup {
+  padding: 10px;
+  text-align: left;
+  font: 14px Verdana;
+}
+div.popup_title {
+  background-color: #CC5454;
+  border: 1px solid #A23030;
+  border-bottom: none;
+  color: white;
+  font-weight: bold;
+  font-size: 100%;
+  margin: -10px -10px 0 -10px;
+  padding: 5px 9px;
+  cursor: move;
+}
+div.popup_content {
+  font-size: 90%;
+  border: 1px solid #822727;
+  border-top: none;
+  margin: 0 -10px -10px -10px;
+  padding: 1px 9px;
+  color: #000;
+}
+div.popup_buttons {
+  background: #f2f2f2;
+  border-top: 1px solid #ccc;
+  padding: 9px;
+  margin: 10px -9px 0;
+  text-align: right;  
+}
+div.popup_buttons button {
+  border: 1px solid #999;
+  background: #eeeeed;
+  font-weight: bold;
+  font-size: 100%;
+  color: #333;
+  padding: 4px 8px 5px;
+  box-shadow: #fff 0 1px 0 inset;
+  -webkit-box-shadow: #fff 0 1px 0 inset;
+  -moz-box-shadow: #fff 0 1px 0 inset;
+  cursor: pointer;
+  margin-left: 2px;
+  font-size: 14px;
+}
+div.popup_buttons button.default {
+  border: 1px solid #802626;
+  background: #C74646;
+  color: white;
+  box-shadow: #D67575 0 1px 0 inset;
+  -webkit-box-shadow: #D67575 0 1px 0 inset;
+  -moz-box-shadow: #D67575 0 1px 0 inset;
+}
+div.popup_buttons button:active {
+  background: #ddd;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+}
+div.popup_buttons button.default:active {
+  background: #BA3737;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+}

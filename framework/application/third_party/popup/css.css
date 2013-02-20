@@ -1,0 +1,51 @@
+/*
+ * Name : POPUP Box
+ * Description : Specific style sheet for this plug-in.
+ * Category : Xy PHP Framework Project
+ * Author : Armande Bayanes
+ *
+ **/
+
+#xyPOPUPoverlay {
+
+    /* Set it to fill the whole screen. */
+    width:100%;
+    height:100%;
+
+    z-index:198;
+    position:absolute;
+    top:0;
+    left:0;
+
+    background-color:#999;
+
+    /* Make it transparent. */
+    filter:alpha(opacity=50);
+    -moz-opacity:0.5;
+    -khtml-opacity:0.5;
+    opacity:0.5;
+
+    /* Hide by default. */
+    display:none;
+}
+
+div > div#xyPOPUPoverlay {
+    position:fixed;
+}
+
+#xyPOPUPbox {
+    border:5px solid #888;
+    background:#FFF;
+    width:328px;
+
+    /* Positioning and make z-index the highest as possible. */
+    position:absolute;
+    z-index:199;
+
+    /* Hide by default. */
+    display:none;
+}
+
+#xyPOPUPcontent {
+    border:1px solid #000;    
+}

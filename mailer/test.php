@@ -1,0 +1,5 @@
+<?php
+$x = unserialize(base64_decode('YTo1OntzOjQ6InR5cGUiO3M6NzoicnRhX2FkZCI7czo3OiJzdWJqZWN0IjtzOjI1OiJOZXcgUlRBIHdhcyBjcmVhdGVkIFszOTRdIjtzOjk6InVzZXJfbmFtZSI7czo2OiJwb3duZXIiO3M6ODoicnRhX25hbWUiO3M6MTY6IjM5NCA6IEJlZWYgU3Rha2UiO3M6OToiZGF0ZV90aW1lIjtpOjEzNDk5OTA0MjA7fQ=='));
+
+print_r($x);
+?>

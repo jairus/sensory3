@@ -1,0 +1,22 @@
+#requestor {
+    width: 40px;
+    text-transform: uppercase
+}
+
+#specifics_wrapper { color: #999 }
+
+#no_of_samples {
+    width: 70px;
+    text-align: right
+}
+
+#table_data { border: 1px solid #CCC }
+#table_data th { border: 1px solid #E8E8E8 }
+#table_data td { border: 1px solid #E8E8E8 }
+#table_data th>div { padding: 5px }
+#table_data td>div { padding: 2px }
+
+#table_rta { border: 1px solid #CCC }
+#table_rta td, th { border: 1px solid #E8E8E8 }
+#table_rta td>div { padding: 5px }
+#table_rta th>div { padding: 5px; font-weight: bold }

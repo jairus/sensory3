@@ -1,0 +1,116 @@
+/*
+ * Name : Dialog Box
+ * Description : Specific style sheet for this plug-in.
+ * Category : Xy PHP Framework Project
+ * Author : Armande Bayanes
+ *
+ **/
+
+#xyDIALOGoverlay {
+
+    /* Set it to fill the whole screen. */
+    width:100%;
+    height:100%;
+
+    z-index:200;
+    position:absolute;
+    top:0;
+    left:0;
+
+    background-color:#999;
+
+    /* Make it transparent. */
+    filter:alpha(opacity=50);
+    -moz-opacity:0.5;
+    -khtml-opacity:0.5;
+    opacity:0.5;
+
+    /* Hide by default. */
+    display:none;
+}
+
+div > div#xyDIALOGoverlay {
+    position:fixed;
+}
+
+#xyDIALOGbox {
+    border:5px solid #888;
+    background:#FFF;
+    width:328px;
+
+    /* Positioning and make z-index the highest as possible. */
+    position:absolute;
+    z-index:201;
+
+    /* Hide by default. */
+    display:none;
+}
+
+#xyDIALOGcontent {
+    border:1px solid #000;    
+}
+
+#xyDIALOGtitle {
+    text-align:left;
+    background-color:#000;
+    color:#FFF;
+    font:12px Arial;
+    font-weight:bold;
+    padding:5px;
+}
+
+#xyDIALOGmessage {
+    text-align:left;
+    font:12px Arial;
+    padding:5px 5px 5px 15px;
+    display:inline-block;
+}
+
+#xyDIALOGmessage td {
+    font-size:12px;
+}
+
+#xyDIALOGbuttons {
+    clear:both;
+    text-align:right;
+    border-top:1px solid graytext;
+    background:#E8E8E8;
+    padding:5px;
+}
+
+a.xyDIALOGbutton {
+    color:#FFF;
+    text-decoration:none;
+    font:12px Arial;
+    font-weight:bold;
+    cursor:pointer;
+    text-align:center;
+    background-color: #1F8BD2;
+    display:inline-block;
+    width:50px;
+    padding:5px;
+    border:1px solid #000
+}
+
+a.xyDIALOGbutton:hover {
+    background-color: #0F6EB8
+}
+
+.xyDIALOGicon-image {
+    background-image:url(xyDIALOGicons.png);
+    background-repeat:no-repeat;
+    width:48px;
+    height:48px;
+}
+.xyDIALOGicon-confirm {
+    background-position:0 0;
+}
+.xyDIALOGicon-ok {
+    background-position:-48px 0 ;
+}
+.xyDIALOGicon-critical {
+    background-position:-96px 0;
+}
+.xyDIALOGicon-warning {
+    background-position:-144px 0;
+}

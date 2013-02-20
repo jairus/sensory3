@@ -1,0 +1,89 @@
+/* Parent navigations. */
+
+#xyNAV {
+    position: relative;
+    float: left;
+    width: 100%;
+    padding: 0 0 1.75em 1em;    
+    margin: 0;
+    list-style: none;
+    line-height: 1em;
+}
+
+#xyNAV li ul {
+    
+    -webkit-border-top-left-radius: 3px;
+    -webkit-border-top-right-radius: 3px;
+    -moz-border-radius-topleft: 3px;
+    -moz-border-radius-topright: 3px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+#xyNAV li {
+    float: left;
+    margin: 0;
+    padding: 0
+}
+
+#xyNAV a {
+    display: block;
+    color: #444;
+    text-decoration: none;
+    font-weight: bold;
+    background: #ddd;
+    margin: 0;
+    padding: 0.25em 1em;    
+    border-left: 1px solid #fff;
+    border-top: 1px solid #fff;
+    border-right: 1px solid #aaa
+}
+
+#xyNAV a:hover,
+#xyNAV a:active,
+#xyNAV a.here:link,
+#xyNAV a.here:visited {
+    background: #bbb
+}
+
+#xyNAV a.here:link,
+#xyNAV a.here:visited {
+    position: relative;
+    z-index: 102
+}
+
+/* Child navigations. */
+#xyNAV ul {
+    position: absolute;
+    left: 0;
+    top: 1.75em;
+    float: left;
+    background: #bbb;
+    width: 100%;
+    margin: 0;
+    padding: 0.25em 0.25em 0.25em 1em;
+    list-style: none;
+    border-top: 1px solid #fff
+}
+
+#xyNAV ul li {
+    float: left;
+    display: block;
+    margin-top: 1px
+}
+
+#xyNAV ul a {
+    background: #bbb;
+    color: #fff;
+    display: inline;
+    margin: 0;
+    padding: 0 1em;
+    border: 0
+}
+
+#xyNAV ul a:hover,
+#xyNAV ul a:active,
+#xyNAV ul a.here:link,
+#xyNAV ul a.here:visited {
+    color: #444
+}

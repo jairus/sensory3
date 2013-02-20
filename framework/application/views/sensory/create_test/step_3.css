@@ -1,0 +1,52 @@
+div[id^='ss_name_wrapper_'] { position: absolute }
+div[id^='ss_name_wrapper_inner_'] {
+    
+    position: relative;
+    left: -20px;
+    background: #FFF;
+    padding: 5px;
+    border: 2px solid #FFCC00;
+    
+    /* h-shadow v-shadow blur spread color inset */
+    -moz-box-shadow: 2px 2px 4px #777;
+    -webkit-box-shadow: 2px 2px 4px #777;
+    box-shadow: 2px 2px 4px #777
+}
+input[id^='ss_name_'] { width: 200px }
+
+#ss_search_field { width: 300px }
+#ss_search_result {
+    
+    position: absolute;
+    display: none;
+    width: 300px;
+    margin-top: 2px
+}
+#ss_search_result a {
+    
+    color: #FFF;
+    text-decoration: none;
+    font-weight: bold
+}
+#ss_search_result a:hover {
+    
+    text-decoration: underline
+}
+#ss_search_result_inner {
+    
+    clear: both;
+    position: relative;
+    left: +100px;
+    background: #FFF;
+    padding: 5px;
+    border: 2px solid #990000;
+    height: 200px;
+    width: 100%;
+    overflow: auto;
+    z-index: 1;
+    
+    /* h-shadow v-shadow blur spread color inset */
+    -moz-box-shadow: 2px 2px 4px #777;
+    -webkit-box-shadow: 2px 2px 4px #777;
+    box-shadow: 2px 2px 4px #777
+}

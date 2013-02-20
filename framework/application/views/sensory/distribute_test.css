@@ -1,0 +1,46 @@
+#rtas_wrapper, #seats_wrapper {
+    padding: 0;
+    margin: 0;
+    
+}
+#rtas_wrapper li, #seats_wrapper li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    margin: 1px 0 1px 0;
+    padding: 2px 5px 2px 5px;
+    cursor: default
+}
+
+#feedback { font-size: 1.4em; }
+#respondents_wrapper .ui-selecting { background: #FECA40; }
+#respondents_wrapper .ui-selected { background: #999; color: white; }
+#respondents_wrapper { width: 700px; list-style-type: none; margin: 0; padding: 0; }
+#respondents_wrapper li { margin: 3px; padding: 1px; float: left; width: 100px; height: 80px; font-size: 4em; text-align: center; }
+
+.seat_wrapper { width: 700px; list-style-type: none; margin: 0; padding: 0; }
+.seat_wrapper li { margin: 3px; padding: 1px; float: left; width: 100px; height: 80px }
+
+
+
+#content_tbl td > div.menu {
+    
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background: #EFEFEF;
+    /*-moz-box-shadow: 0 0 5px #777;
+    -webkit-box-shadow: 0 0 5px #777;
+    box-shadow: 0px 0px 5px #777;*/
+    padding: 2px;
+    text-align: center;
+    cursor: pointer
+    /*width: 100%;*/
+}
+
+#content_tbl td > div.menu:hover {
+    
+    
+    background: #E5E5E5;
+    
+}

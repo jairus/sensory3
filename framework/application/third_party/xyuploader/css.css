@@ -1,0 +1,47 @@
+/* Uploader Queue */
+
+#xy_uploader_wrapper ul {
+    margin: 0;
+    padding: 0
+}
+
+#xy_uploader_wrapper ul li {
+    margin: 0;
+    padding: 6px 0 0 0;
+    list-style: none;
+    float: left
+}
+
+#xy_uploader_loader_wrapper_main {
+    border: 1px solid #CCC;
+    color: #999;
+    width: 200px;
+    font: 11px Arial;
+    margin: 0;
+    height: 19px
+}
+
+#xy_uploader_loader_wrapper {
+    background: #CCC;
+    width: 100px;
+    text-align: center;
+    height: 15px
+}
+
+#xy_uploader_browse_button {
+    font: 11px Arial
+}
+
+#xy_uploader_browse_button b {
+    color: #CC0000
+}
+
+#xy_uploader_statistics {
+    font: 11px Arial;
+    color: #999;
+    clear : both
+}
+
+#xy_uploader_statistics b {
+    color: #FFF
+}

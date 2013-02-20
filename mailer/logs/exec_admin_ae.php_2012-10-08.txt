@@ -1,0 +1,21 @@
+09:18AM	$id is empty
+09:26AM	$id is empty
+09:27AM	Array
+09:27AM	$id is empty
+09:30AM	Array
+09:30AM	$id is empty
+09:33:11 AM	Array
+09:33:11 AM	$id is empty
+09:34:06 AM	{"id":"0","level":"Administrator","birthdate":"2012-10-02","superior":"1","employee_no":123,"username":null,"fname":"Pedrino","mname":"Paquito","lname":"Hello","password":"123","email":null,"firstname":"Pedrino","middlename":"Paquito","lastname":"Hello"}
+09:34:06 AM	$id is empty
+09:41:25 AM	{"id":67,"level":"Administrator","birthdate":"2012-10-02","superior":null,"employee_no":0,"username":null,"fname":"Ronald","mname":"Costales","lname":"Cosasan","password":"123","email":null,"firstname":"Ronald","middlename":"Costales","lastname":"Cosasan"}
+09:43:50 AM	{"id":68,"level":"Administrator","birthdate":"2012-10-02","superior":null,"employee_no":0,"username":null,"fname":"Ronald","mname":"Costales","lname":"Cosasan","password":"123","email":null,"firstname":"Ronald","middlename":"Costales","lastname":"Cosasan"}
+09:55:52 AM	INSERT INTO users SET level='Administrator',employee_no='0',birthdate='2012-10-02',firstname='Ronald',middlename='Costales',lastname='Cosasan',email='zeoreh@yahoo.com',username='RonCostales',password='123',created='2012-10-08 09:55:52'',id=68
+09:58:40 AM	INSERT INTO users SET level='1',employee_no='18675',birthdate='2012-10-02',firstname='Ronald',middlename='Costales',lastname='Cosasan',email='zeoreh@yahoo.com',username='RonCostales',password='123',created='2012-10-08 09:58:40'',id=68
+10:01:24 AM	INSERT INTO users SET level='1',employee_no='18675',birthdate='2012-10-02',firstname='Ronald',middlename='Costales',lastname='Cosasan',email='zeoreh@yahoo.com',username='RonCostales',password='123',created='2012-10-08 10:01:24',id=68
+10:07:30 AM	UPDATE users SET level='1',employee_no='124357',birthdate='1984-08-23',firstname='Armande',middlename='Guisdan',lastname='Bayanes',email='tuso@programmerspride.com',username='admin',password='admin' WHERE id=1
+10:30:22 AM	INSERT INTO users SET level='1',employee_no='0',birthdate='2012-10-02',firstname='Ronaldo',middlename='Bandido',lastname='Sugo-sugo',email='rain_x_tiger@yahoo.com',username='bandido',password='123',created='2012-10-08 10:30:19',id=67
+10:30:57 AM	DELETE FROM users WHERE id=68
+10:43:05 AM	UPDATE users SET level='1',employee_no='11177',birthdate='2012-10-02',firstname='Ronaldo',middlename='Bandido',lastname='Sugo-sugo',email='rain_x_tiger@yahoo.com',username='bandido',password='123' WHERE id=67
+10:48:09 AM	UPDATE users SET level='1',superior_id='26',employee_no='11177',birthdate='2012-10-02',firstname='Ronaldo',middlename='Bandido',lastname='Sugo-sugo',email='rain_x_tiger@yahoo.com',username='bandido',password='123' WHERE id=67
+01:18:43 PM	INSERT INTO users SET level='1',superior_id='36',employee_no='1163358',birthdate='2012-10-08',firstname='Catherine',middlename='Espinosa',lastname='Estiaga',email='cathy.estiaga@jollibee.com.ph',username='CEE',password='1163358',created='2012-10-08 13:18:43',id=48

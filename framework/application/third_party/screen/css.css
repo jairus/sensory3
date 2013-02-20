@@ -1,0 +1,24 @@
+#tbl_screen {
+    
+    border: 1px solid #CCC;
+    
+}
+
+#tbl_screen th {
+    
+    background: #EFEFEF;
+}
+
+#tbl_screen th div {
+    
+    padding: 5px;
+    font-weight: bold
+}
+
+#tbl_screen th, #tbl_screen td {
+    
+    border: 1px solid #CCC;
+    
+    /*border-left: 2px solid #CCC;
+    border-bottom: 2px solid #CCC*/
+}
