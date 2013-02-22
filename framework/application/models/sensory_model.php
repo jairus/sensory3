@@ -1054,7 +1054,7 @@ class Sensory_model extends CI_Model {
             JOIN    rta_forms rta
             ON      q.rta_id=rta.id
             WHERE   qs.`date`='" . date('Y-m-d', strtotime($date)) . "'";
-        
+
         $query = $this->db->query($sql);
         $total = $query->num_rows(); /* Get the total distribution for this date. */
         

@@ -415,7 +415,7 @@ class Exam extends XY_Controller {
         $data['screen_total'] = $screen_total;
         $data['button_prev'] = $html_prev;
         $data['button_next'] = $html_next;
-        
+        //unset($_SESSION['EXAM'][$screen_code][$screen_count]['items']);
         $data['content'] = $this->getViewFile(__FUNCTION__, $data);
         $this->load->view('exam', $data);
     }
@@ -545,6 +545,10 @@ class Exam extends XY_Controller {
         $this->securePage();
         
         if(empty($_POST) || ! $this->session->id) return;
+        
+        $date = trim($_POST['date']);
+        if($date) $this->exam_model->date = date('Y-m-d', strtotime($date)); /* Format the date regardless of
+         * it's current format just to ensure that it's correct. */
         
         $response = $this->exam_model->getQueue();
         echo json_encode($response);

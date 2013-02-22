@@ -1,6 +1,6 @@
 #table_calendar { border: 1px solid #CCC }
 #table_calendar th { border: 1px solid #E8E8E8 }
-#table_calendar td { border: 1px solid #E8E8E8 }
+#table_calendar td { border: 1px solid #E8E8E8; width: 150px }
 
 .content_cell { height: 100px; width: 100% }
 
@@ -9,3 +9,29 @@
 #table_data th>div { padding: 5px }
 #table_data td { border: 1px solid #E8E8E8 }
 #table_data td>div { padding: 5px }
+
+.cell_no_content {
+    text-align: right; color: #777
+}
+
+.cell_no_content_today sup {
+    text-align: right;
+    color: #990000
+}
+.cell_no_content_today span {
+    font-weight: bold;
+    font-size: 20px
+}
+
+.header_month {
+    text-align: center;
+    padding: 5px;
+    font-weight: bold
+}
+
+.header_day {
+    text-align: center;
+    padding: 5px;
+    font-weight: bold;
+    color: #777
+}

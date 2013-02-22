@@ -7,9 +7,8 @@ array_walk($item, 'xy_screen_and_item_string_html');
 extract($item);
 
 $code_arr  = explode(',', $codes);
-
 $answer = $_SESSION['EXAM'][$screen_code][$screen_count]['items'][$ctr - 1]->axl;
-if(! $answer) $answer = new stdClass;
+if(! is_object($answer)) $answer = new stdClass;
 
 $type_ctr = $type . '_' . $ctr;
 
@@ -30,7 +29,6 @@ for($x=0; $x<$y; $x++) {
 ?>
 <script type="text/javascript">
 jQuery(function() {
-    
     EXAM.answers[<?php echo $ctr - 1?>] = { 'type' : '<?php echo $type?>', 'axl' : <?php echo json_encode($answer)?> };
     
     jQuery( "#<?php echo $type_ctr?>_ranking_code_wrapper" ).sortable({
@@ -102,11 +100,31 @@ jQuery.extend(
         
         <?php echo $type_ctr?> : function() {
                 
-                if(! EXAM.answers[<?php echo $ctr - 1?>].axl) {
+                /* START: Since we cannot get the length of an Object by .length. */
+                var answered = 0; var total = 0;
+                jQuery.each(EXAM.answers[<?php echo $ctr - 1?>].axl, function(key, value){
+                    if(value) answered++;
+                    total++;
+                });
+                /* END: Since we cannot get the length of an Object by .length. */
+                
+                if(! answered) {
                     
                     Popup.dialog({
                         title : 'ERROR',
-                        message : '<div>Please select an answer for "Ranking for Preference item# <?php echo $ctr?>".</div>',
+                        message : '<div>Please select an answer for "<b>Ranking for Preference item# <?php echo $ctr?></b>".</div>',
+                        buttons: ['Okay', 'Cancel'],
+                        width: '420px'
+                    });
+
+                    return false;
+                }
+                else
+                if(answered != total){
+                    
+                    Popup.dialog({
+                        title : 'ERROR',
+                        message : '<div>Please complete your answers for "Ranking for Preference<br /><b>item# <?php echo $ctr?></b>".<br /><br />Only <b>'+ answered +'</b> out of <b>'+ total +'</b> '+ ((answered > 1) ? 'are' : 'is') +' answered.</div>',
                         buttons: ['Okay', 'Cancel'],
                         width: '420px'
                     });
@@ -123,7 +141,7 @@ jQuery.extend(
                     
     <div style="margin-bottom: 20px"><?php echo $i?></div>
     <div style="margin-bottom: 10px"><b>Codes:</b></div>
-    <ul id="<?php echo $type_ctr?>_ranking_code_wrapper" class="connectedSortable ranking_code_wrapper" style=" border: 1px dashed #CCC;">
+    <ul id="<?php echo $type_ctr?>_ranking_code_wrapper" class="connectedSortable ranking_code_wrapper" style="border: 1px dashed #CCC;">
         <?php
         foreach($code_arr as $code) {
 

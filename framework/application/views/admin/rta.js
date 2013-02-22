@@ -1,7 +1,7 @@
 jQuery(function () { 
     
     jQuery("#xy_list").jqGrid({ 
-        width : 1078,
+        width : jQuery('#xy_list').parents('div').width() - 2,
         height : 320,
         url : DOCROOT +'rta/async_load_list/?t='+ (new Date).getTime(),
         postData : { adminlist : 1 },

@@ -60,75 +60,12 @@ function xy_qitem_assign($item, $screen_total, $screen, $data, $rta_id, $screen_
         }
         
         if(! $code_choice) exit('Error: No code assigned for this station yet.');
-        
-        $code_choice = str_replace(array('li_' . $station_number, '_'), array('', ' '), $code_choice);
-        $code_choice = explode(' ', trim($code_choice));        
+        $code_choice = preg_replace("/li\_[[:digit:]]_/", '', $code_choice);
+        $code_choice = explode('_', trim($code_choice));
     }
     
-    $func = 'xy_qitem_' . $item['type'];
-    if(function_exists($func)) { echo '<div style="margin: ' . (($ctr > 1) ? 20 : 0) . 'px 0 20px 0">', call_user_func($func, $item, $ctr), '</div>'; }
-    else {
-        
-        $file = APPPATH . 'views/exam/actual/' . $item['type'] . '.php';
-        if(file_exists($file)) include $file;                
-    }
-}
-
-function xy_qitem_instructionx($item, $ctr) {
-    
-    array_walk($item, 'xy_screen_and_item_string_html');
-    extract($item);
-    
-    echo $ctr;
-    if($i) {
-        
-        //$i = str_replace('[nl]', '<br />', $i);
-        $html = '<div>' . $i . '</div>';        
-    }
-    
-    return $html;
-}
-
-function xy_qitem_multiple_choicex($item, $index) {
-    
-    array_walk($item, 'xy_screen_and_item_string_html');
-    extract($item);
-    
-    //$choices = explode('[=ROW=]', str_replace('[quote]', "'", $choices));
-    $choices = explode('[=ROW=]', $choices);
-    
-    $ctr = 0;
-    foreach($choices as $choice) {
-        
-        $ctr++;
-        $html_choice .= '<div><input name="' . $type . '_' . $index . '_choice" id="' . $type . '_' . $index . '_choice_' . $ctr . '" type="radio" /> <label for="' . $type . '_' . $index . '_choice_' . $ctr . '">' . $choice . '</label></div>';
-    }
-    
-    if($question) $question = '<div><b>' . $question . '</b></div>';    
-    $html .= $question . $html_choice;
-    
-    return $html;
-}
-
-function xy_qitem_catax($item, $index) {
-    
-    array_walk($item, 'xy_screen_and_item_string_html');
-    extract($item);
-    
-    //$choices = explode('[=ROW=]', str_replace('[quote]', "'", $choices));
-    $choices = explode('[=ROW=]', $choices);
-    
-    $ctr = 0;
-    foreach($choices as $choice) {
-        
-        $ctr++;
-        $html_choice .= '<div><input name="' . $type . '_' . $index . '_choice" id="' . $type . '_' . $index . '_choice_' . $ctr . '" type="checkbox" /> <label for="' . $type . '_' . $index . '_choice_' . $ctr . '">' . $choice . '</label></div>';
-    }
-    
-    if($question) $question = '<div><b>' . $question . '</b></div>';    
-    $html .= $question . $html_choice;
-    
-    return $html;
+    $file = APPPATH . 'views/exam/actual/' . $item['type'] . '.php';
+    if(file_exists($file)) include $file;    
 }
 
 if($viewable['cmd']) {

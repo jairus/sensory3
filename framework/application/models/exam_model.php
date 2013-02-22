@@ -31,7 +31,7 @@ class Exam_model extends CI_Model {
                 "FROM q_distributions AS d " .
                 "LEFT JOIN q_distribution_queue AS q " .
                 "ON d.code=q.code " . $sql_append .
-                "ORDER BY q.id,q.rta_id";  /* Sort according to what is first in the queue. */
+                "ORDER BY q.created ASC";  /* Sort according to what is first in the queue. */
 
         $query = $this->db->query($sql);
         $t = $query->num_rows();

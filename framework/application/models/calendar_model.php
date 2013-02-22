@@ -15,18 +15,13 @@ class Calendar_model extends CI_Model {
     
     public function loadCellContent($year = '', $month = '') {
         
-        $url = $this->config->item('XY')->DOCROOT . 'calendar/?target=day&amp;date=' . ($year . '-' .$month . '-{day}');
+        $url = xy_url('calendar/?target=day&amp;date=' . ($year . '-' .$month . '-{day}'));
         
         return '
             <div class="content_cell">
                 <div class="pad5">
-                    <table cellpadding="0" cellspacing="0" width="100%">
-                        <tr><td style="border: 0; padding-top: 15px"><div>{content}</div></td>
-                            <td style="border: 0" valign="top">
-                                <div><a href="' . $url . '">{day}</a></div>                                
-                            </td>
-                        </tr>
-                    </table>                    
+                    <div style="text-align: right; color: #990000"><a href="' . $url . '">{day}</a></div>
+                    <div>{content}</div>
                 </div>
             </div>
         ';
@@ -37,7 +32,7 @@ class Calendar_model extends CI_Model {
         return '
             <div class="content_cell">
                 <div class="pad5">
-                    <div style="text-align: right">{day}</div>                    
+                    <div class="cell_no_content">{day}</div>
                 </div>
             </div>
         ';
@@ -45,14 +40,12 @@ class Calendar_model extends CI_Model {
     
     public function loadCellContentToday($year = '', $month = '') {
         
-        $url = $this->config->item('XY')->DOCROOT . 'calendar/?target=day&amp;date=' . ($year . '-' .$month . '-{day}');
+        $url = xy_url('calendar/?target=day&amp;date=' . ($year . '-' .$month . '-{day}'));
         
         return '
             <div class="content_cell" style="background: #EFEFEF">
                 <div class="pad5">
-                
                     <div style="text-align: right; color: #990000"><a href="' . $url . '"><sup>Today</sup></a> <span style="font-weight: bold; font-size: 20px">{day}</span></div>
-                    
                     <div>{content}</div>
                 </div>
             </div>
@@ -63,8 +56,8 @@ class Calendar_model extends CI_Model {
         
         return '
             <div class="content_cell">
-                <div class="pad5">
-                    <div style="text-align: right; color: #990000"><sup>Today</sup> <span style="font-weight: bold; font-size: 20px">{day}</span></div>                    
+                <div class="pad5 cell_no_content_today">
+                    <div><sup>Today</sup> <span>{day}</span></div>
                 </div>
             </div>
         ';
@@ -72,12 +65,78 @@ class Calendar_model extends CI_Model {
     
     public function loadHeader() {
         
-        return '<div style="text-align: center; padding: 5px; font-weight: bold">{heading}</div>';
+        return '<div class="header_month">{heading}</div>';
     }
     
     public function loadDayHeader() {
         
-        return '<div style="text-align: center; padding: 5px; font-weight: bold">{week_day}</div>';
+        return '<div class="header_day">{week_day}</div>';
+    }
+    
+    public function getWeekNumbers($month, $year) {
+        
+        /**
+         * How Many Weeks in a Year?
+         * 1 Year = 365 or 366 (Leap year) days.
+         * 1 Week = 7 days.
+         * So,
+         *      Number of days in a Year / Number of days in a Week
+         *      365 or 366 / 7
+         *      52.something
+         * Get the "floor" to have "52"
+         **/
+        
+        $grouped_by_week_number = array();
+        $nof_days_in_month = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+        for($x=1; $x<=$nof_days_in_month; $x++) {
+            
+            $dd = str_pad($x, 2, '0', STR_PAD_LEFT);
+            $tmp_date = "$month/$dd/$year";
+            
+            /* Get the "week number" where the current date falls into. */
+            $number_of_the_week = date('W', strtotime($tmp_date));
+            
+            /* Group it for checking later. */
+            $grouped_by_week_number[$number_of_the_week][] = $tmp_date;            
+        }
+        
+        return $grouped_by_week_number;
+    }
+    
+    public function getWeekNumbersAll($year) {
+        
+        /**
+         * How Many Weeks in a Year?
+         * 1 Year = 365 or 366 (Leap year) days.
+         * 1 Week = 7 days.
+         * So,
+         *      Number of days in a Year / Number of days in a Week
+         *      365 or 366 / 7
+         *      52.something
+         * Get the "floor" to have "52"
+         **/
+        
+        $grouped_by_week_number = array();
+        
+        for($x=1; $x<=12; $x++) {
+            
+            $month = str_pad($x, 2, '0', STR_PAD_LEFT);
+            $nof_days_in_month = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+            
+            for($y=1; $y<=$nof_days_in_month; $y++) {
+            
+                $dd = str_pad($y, 2, '0', STR_PAD_LEFT);
+                $tmp_date = "$month/$dd/$year";
+
+                /* Get the "week number" where the current date falls into. */
+                $number_of_the_week = date('W', strtotime($tmp_date));
+
+                /* Group it for checking later. */
+                $grouped_by_week_number[$number_of_the_week][] = $tmp_date;            
+            }
+        }
+        
+        return $grouped_by_week_number;
     }
 }
 

@@ -6,10 +6,10 @@ error_reporting(E_ALL ^ E_NOTICE);
 array_walk($item, 'xy_screen_and_item_string_html');
 extract($item);
 
-print_r($item);
-//print_r($code_choice);
-//echo $codes;
 $code_arr  = $code_choice;//explode(',', $codes);
+//unset($_SESSION['EXAM'][$screen_code][$screen_count]['items'][$ctr - 1]->axl);
+$answer = $_SESSION['EXAM'][$screen_code][$screen_count]['items'][$ctr - 1]->axl;
+if(! is_object($answer)) $answer = new stdClass;
 
 $type_ctr = $type . '_' . $ctr;
 
@@ -30,6 +30,8 @@ for($x=0; $x<$y; $x++) {
 ?>
 <script type="text/javascript">
 jQuery(function() {
+    EXAM.answers[<?php echo $ctr - 1?>] = { 'type' : '<?php echo $type?>', 'axl' : <?php echo json_encode($answer)?> };
+    
     jQuery("#<?php echo $type_ctr?>_ranking_code_wrapper").sortable({
         connectWith: ".connectedSortable",
         placeholder: "ui-state-highlight"
@@ -68,9 +70,73 @@ jQuery(function() {
                     ctr++;
                 });
             }
+            
+            jQuery("div[id^='<?php echo $type_ctr?>_rank_']").each(function(){
+                
+                var e = jQuery(this); var id = e.attr('id').split('_'); 
+                var index = parseInt(id[id.length - 1], 10);
+                
+                EXAM.answers[<?php echo $ctr - 1?>]['axl'][index] = jQuery('li b', e).html();                
+            });
+            
+            EXAM.session_updater_peritem(<?php echo $ctr?>);
         }
     });
+    
+    /* START: Initialize answer if present. */
+    jQuery.each(EXAM.answers[<?php echo $ctr - 1?>]['axl'], function(key, value){
+        
+        jQuery('#<?php echo $type_ctr?>_ranking_code_wrapper li').each(function(){
+            
+            var e = jQuery(this);
+            if(parseInt(jQuery('b', e).html(), 10) == value) { jQuery('#<?php echo $type_ctr?>_rank_'+ key).append(e); }            
+        });
+    });
+    /* END: Initialize answer if present. */
 });
+
+jQuery.extend(
+    
+    EXAM.axl, {
+        
+        <?php echo $type_ctr?> : function() {
+                
+                /* START: Since we cannot get the length of an Object by .length. */
+                var answered = 0; var total = 0;
+                jQuery.each(EXAM.answers[<?php echo $ctr - 1?>].axl, function(key, value){
+                    if(value) answered++;
+                    total++;
+                });
+                /* END: Since we cannot get the length of an Object by .length. */
+                
+                if(! answered) {
+                    
+                    Popup.dialog({
+                        title : 'ERROR',
+                        message : '<div>Please select an answer for "Ranking for Intensity <b>item# <?php echo $ctr?></b>".</div>',
+                        buttons: ['Okay', 'Cancel'],
+                        width: '420px'
+                    });
+
+                    return false;
+                }
+                else
+                if(answered != total){
+                    
+                    Popup.dialog({
+                        title : 'ERROR',
+                        message : '<div>Please complete your answers for "Ranking for Intensity<br /><b>item# <?php echo $ctr?></b>".<br /><br />Only <b>'+ answered +'</b> out of <b>'+ total +'</b> '+ ((answered > 1) ? 'are' : 'is') +' answered.</div>',
+                        buttons: ['Okay', 'Cancel'],
+                        width: '420px'
+                    });
+
+                    return false;
+                }
+                
+                return true;                
+        }
+    }
+);
 </script>
 <div style="margin: 10px 0 10px 0">
                     
@@ -78,7 +144,7 @@ jQuery(function() {
     <div style="margin-bottom: 10px"><b>Codes:</b></div>
     
     <div style="margin-left: auto; margin-right: auto; text-align: center">
-        <ul id="<?php echo $type_ctr?>_ranking_code_wrapper" class="connectedSortable ranking_code_wrapper" style=" border: 1px dashed #CCC; display: inline-block">
+        <ul id="<?php echo $type_ctr?>_ranking_code_wrapper" class="connectedSortable ranking_code_wrapper" style="border: 1px dashed #CCC">
             <?php
             foreach($code_arr as $code) {
 
@@ -96,10 +162,10 @@ jQuery(function() {
         
         <div style="margin-left: auto; margin-right: auto; text-align: center">
             
-            <ul class="ranking_rank_wrapper" style="text-align: center; margin: auto; display: inline-block"><?php echo $ranks?></ul>
+            <ul class="ranking_rank_wrapper"><?php echo $ranks?></ul>
             
             <div style="clear: both">
-                <div style="border: 1px solid #CCC; min-height: 53px; padding: 0 5px 0 5px; display: inline-block"><?php echo $rank_receiver?></div>
+                <div style="border: 1px solid #CCC; min-height: 53px; padding: 0 5px 0 5px"><?php echo $rank_receiver?></div>
             </div>
         </div>
         

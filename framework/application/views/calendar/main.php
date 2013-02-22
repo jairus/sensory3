@@ -7,7 +7,18 @@
     <div style=" clear: both">
     <?php
     if($target == 'month') {
-        echo $calendar;
+        
+        ?>
+        <table id="calendar_wrapper" style=" border: 1px solid #CCC">
+            <tr><td style="vertical-align: top; padding: 10px; background: #E5E5E5; text-align: center">
+                    <div><b>Week #</b></div>
+                    <?php echo $week_no?>
+                </td>
+                <td style="vertical-align: top"><?php echo $calendar?></td>
+            </tr>
+        </table>
+        <?php
+        
     }
     else
     if($target == 'week') {

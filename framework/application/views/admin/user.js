@@ -1,7 +1,7 @@
 jQuery(function () { 
     
     jQuery("#xy_list").jqGrid({ 
-        width : jQuery('#xy_list').parents('div').width(),
+        width : jQuery('#xy_list').parents('div').width() - 2,
         height : 320,
         url : DOCROOT +'admin/async_user_list/?t='+ (new Date).getTime(),
         datatype : "json",

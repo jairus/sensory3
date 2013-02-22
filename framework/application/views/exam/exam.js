@@ -9,10 +9,8 @@ var EXAM = new function() {
     this.step = 0;
     this.flag = [];
     this.answers = [];
-    this.update_flag = true;
     this.attributes = {};
     this.axl = {};
-//    this.ctr = 0;
     
     this.go = function(step) {
         
@@ -39,7 +37,7 @@ var EXAM = new function() {
                 var next = null;
                 
                 if(this.queue.code[this.rta_id].length > 1) {
-                    
+                
                     var next_code_pos = jQuery.inArray(this.screen_code.toString(), EXAM.queue.code[this.rta_id]) + 1;
                     if(next_code_pos < this.queue.code[this.rta_id].length) {
                         
@@ -55,7 +53,7 @@ var EXAM = new function() {
                     }
 
                 } else {
-                    
+                   
                     next = this.find_next_in_queue();
                     if(next) GBL.go('exam/actual/'+ next.rta +'/'+ next.code +'/?batch='+ next.batch.replace(' ', '-') +'&date='+ date);
                     else this.get_unix_timestamp(); /* Redirect to finish. */
@@ -163,28 +161,9 @@ var EXAM = new function() {
                     answers : JSON.stringify(EXAM.answers),
                     t : (new Date).getTime()
                 },
-                function(r) {
-                    
-                    //if(close) EXAM.session_updater("EXAM.close('"+ r +"')"); /* Update before leaving. */
-                    //else EXAM.go();
-                    
-                    EXAM.go();
-                }
+                function() { EXAM.go(); }
             );
         }        
-    }
-    
-    this.session_updater = function(callback) {
-        
-        jQuery.post(
-            DOCROOT +'exam/async_update_session',
-            {
-                rta_id : EXAM.rta_id,
-                screen_code : EXAM.screen_code,
-                t : (new Date).getTime()
-            },
-            function() {if(callback) eval(callback);}
-        );
     }
     
     this.session_updater_peritem = function(item) {
@@ -265,12 +244,17 @@ var EXAM = new function() {
     
     this.puller__queue = function() {
         
+        var date = jQuery.url().param('date');
+        
         jQuery.ajax({
             type: 'POST',
             url: DOCROOT +'exam/async_puller__queue',
             dataType : 'json',
-            data: {t : (new Date).getTime()},
-            success : function(r) {EXAM.queue = r;}
+            data: {
+                date : date,
+                t : (new Date).getTime()
+            },
+            success : function(r) { EXAM.queue = r; }
         });
     }
     

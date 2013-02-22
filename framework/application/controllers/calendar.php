@@ -50,7 +50,7 @@ class Calendar extends XY_Controller {
             $month = $month_tmp;
         }
         
-        $this->configXY->JS_VARS['[position=1]date_subject'] = "'" . $year . '-' . $month . "'";
+        $this->configXY->JS_VARS['[var=false]CALENDAR.date_subject'] = "'" . $year . '-' . $month . "'";
         
         $data['year'] = $year;
         $data['month'] = $month;
@@ -72,7 +72,7 @@ class Calendar extends XY_Controller {
             );
 
             $init['template'] = '
-            {table_open}<table style="background: #FFF" width="100%" id="table_calendar" border="0" cellpadding="0" cellspacing="0">{/table_open}
+            {table_open}<table style="background: #FFF; border-spacing: 0; border-collapse: collapse; border: 1px solid #CCC" id="table_calendar">{/table_open}
             {heading_row_start}<tr>{/heading_row_start}
             {heading_previous_cell}<th><div style="padding-left: 5px"><a href="{previous_url}">&lt;&lt; Previous Month</a></div></th>{/heading_previous_cell}
             {heading_title_cell}<th colspan="{colspan}">' . $this->calendar_model->loadHeader() . '</th>{/heading_title_cell}
@@ -141,38 +141,60 @@ class Calendar extends XY_Controller {
 
                     $row = $dates[$x];
 
-                    if($row['tot'] == 'affective' && $row['group'] == $group) { $cdata[$group]['affective'] = count($cdata[$group]['affective']) + 1; }                
+                    /*if($row['tot'] == 'affective' && $row['group'] == $group) { $cdata[$group]['affective'] = count($cdata[$group]['affective']) + 1; }                
                     if($row['tot'] == 'analytical' && $row['group'] == $group) { $cdata[$group]['analytical'] = count($cdata[$group]['analytical']) + 1; }                
                     if($row['tot'] == 'micro' && $row['group'] == $group) { $cdata[$group]['micro'] = count($cdata[$group]['micro']) + 1; }
-                }            
+                    */
+                    
+                    if($row['tot'] == 'affective' && $row['group'] == $group) { $cdata[$group][$row['tot']] += count($cdata[$group][$row['tot']]); }
+                    if($row['tot'] == 'analytical' && $row['group'] == $group) { $cdata[$group][$row['tot']] += count($cdata[$group][$row['tot']]); }
+                    if($row['tot'] == 'micro' && $row['group'] == $group) { $cdata[$group][$row['tot']] += count($cdata[$group][$row['tot']]); }
+                    if($row['tot'] == 'physico_chem' && $row['group'] == $group) { $cdata[$group][$row['tot']] += count($cdata[$group][$row['tot']]); }
+                }
             }
 
             $tmp = $cdata;
             unset($cdata);
-            
+
             foreach($tmp as $key => $value) {
 
                 $str = '';
                 foreach($value as $type_of_test => $count) { 
-                    $str .= '<b>' . $count . '</b> ' . ucfirst($type_of_test) . '<br />';                     
+                    $str .= '<b>' . ($count + 1) . '</b> ' . ucfirst($type_of_test) . '<br />';                     
                 }
                 $cdata[$key] = $str;
             }
 
             $this->load->library('calendar', $init);
             $data['calendar'] = $this->calendar->generate($year, $month, $cdata);
+            
+            $grouped_by_week_number = $this->calendar_model->getWeekNumbers($month, $year);
+            
+            $html = '<table style="border-spacing: 0; border-collapse: collapse">'; $ctr = 0;
+            foreach($grouped_by_week_number as $week_no => $content) {
+                
+                $ctr++;
+                
+                if($ctr == 1) $margin_top = 'margin-top: 70px;';
+                $html .= '<tr><td><div style="' . $margin_top . ' width: 84px; height: 30px "><a title="Week# ' . $week_no . '" href="' . xy_url('calendar/?target=week&date=' . $year . '-' . $month) . '&week_no=' . $week_no . '"><span style="font-size: 18px; font-weight: bold">' . $week_no . '</span></a></div></td></tr>';
+            }
+            
+            $data['week_no'] = $html . '</table>';            
         }
         else
         if($target == 'week') {
             
+            $week_no = trim($this->configXY->URI['week_no']);
+            $this->configXY->JS_VARS['[var=false]CALENDAR.week_no'] = "'" . $week_no . "'";
+            
             $date = (string) trim($this->configXY->URI['date']);
-            if(substr_count($date, '-') != 1) return $this->_404_ ();
+            if(substr_count($date, '-') < 1) return $this->_404_ ();
             list($year, $month) = explode('-', $date);
             
             /* Initialize. */
             $date_end = ($year . '-' . ((($month + 1) < 10) ? ('0' . ($month + 1)) : ($month + 1)) . '-1');
             
-            $this->configXY->JS_VARS['[position=1]date_end'] = "'" . $date_end . "'";
+            $this->configXY->JS_VARS['[var=false]CALENDAR.date_end'] = "'" . $date_end . "'";
             
             $sql = "
                 SELECT  rta.*,
@@ -275,31 +297,8 @@ class Calendar extends XY_Controller {
             }
         }
         
-        /**
-         * How Many Weeks in a Year?
-         * 1 Year = 365 or 366 (Leap year) days.
-         * 1 Week = 7 days.
-         * So,
-         *      Number of days in a Year / Number of days in a Week
-         *      365 or 366 / 7
-         *      52.something
-         * Get the "floor" to have "52"
-         **/
-        
-        $grouped_by_week_number = array();
-        $nof_days_in_month = cal_days_in_month(CAL_GREGORIAN, $month, $year);
-        for($x=1; $x<=$nof_days_in_month; $x++) {
-            
-            $tmp_date = "$month/$x/$year";//"$year-$month-$x";
-            
-            /* Get the "week number" where the current date falls into. */
-            $number_of_the_week = date('W', strtotime($tmp_date));
-            
-            /* Group it for checking later. */
-            $grouped_by_week_number[$number_of_the_week][] = $tmp_date;            
-        }
-        
-        $this->configXY->JS_VARS['grouped_by_week_number'] = json_encode($grouped_by_week_number);
+        $grouped_by_week_number = $this->calendar_model->getWeekNumbersAll($year);
+        $this->configXY->JS_VARS['[var=false]CALENDAR.grouped_by_week_number'] = json_encode($grouped_by_week_number);
         
         $data['access_level'] = $this->access_level;
         $data['grouped_by_week_number'] = $grouped_by_week_number;
@@ -315,14 +314,13 @@ class Calendar extends XY_Controller {
         unset($input['t']);        
         extract($input);
         
-        if($date == '' || $date_end == '' || $date_subject == '') exit();
+        if($week_no == '' || $date_end == '' || $date_subject == '') exit();
         
         list($year, $month) = explode('-', $date_subject);
         
-        if(substr_count($date, ',')) $date_arr = explode(',', $date);
-        else $date_arr = array($date);
-
-        $date_start = date('Y-m-d', strtotime($date_start));
+        $date_arr = $this->calendar_model->getWeekNumbersAll($year);
+        $date_arr = $date_arr[$week_no];
+        
         $date_end = date('Y-m-d', strtotime($date_end));
 
         $sql = "
@@ -342,8 +340,7 @@ class Calendar extends XY_Controller {
             WHERE   rta.state=1
             AND     rta.date_filed BETWEEN rta.date_filed AND '" . $date_end . "'";
 
-        $query = $this->db->query($sql);
-        
+        $query = $this->db->query($sql);       
         $groups = array();
         $data['data'] = array();
         if($query->num_rows()) {
@@ -359,8 +356,8 @@ class Calendar extends XY_Controller {
                 foreach($schedule as $value) {
 
                     $value = trim($value);
-                    $tmp = date('D,m', strtotime($value));
-                    
+                    $tmp = date('D,m', strtotime($value)); /* ex: Fri,03 */
+
                     /* If matches in the any Days of the current "Week Number". */
                     if(in_array($value, $date_arr)) {
                     
@@ -381,7 +378,6 @@ class Calendar extends XY_Controller {
         }
         
         $data['groups'] = $groups;
-        $data['data'];
         
         echo json_encode($data);
     }
